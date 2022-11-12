@@ -27,20 +27,20 @@ console.log(numbQuestions);
 console.log(quizTime);
 
 // when user clicks start, a timer is initiated
-function startTimer(){
+function startTimer() {
   startScreenEl.setAttribute("class", "hide");
   console.log('is working');
   
   questionsEl.removeAttribute("class");
 
-  timeLeft = setInterval(countdown, 1000);
+  timeLeft = setInterval(countdown, 10);
 
   time.textContent = quizTime;
 
   retrieveQuestion();
 }
 
-function countdown(){  
+function countdown() {  
   quizTime--;
   time.textContent = quizTime;
 
@@ -50,12 +50,12 @@ function countdown(){
   }
 }
 
-function randIndex(){
+function randIndex() {
   var randIndex = Math.floor(Math.random() * questions.length);
   return randIndex;
 }
 
-function retrieveQuestion(){
+function retrieveQuestion() {
   if (randIndex === questions.length) {
     randIndex = 0
   }
@@ -82,9 +82,8 @@ function retrieveQuestion(){
   }     
 }
 
-function selection(event){
-  var buttonEl = event.target;
-  
+function selection(event) {
+  var buttonEl = event.target;  
   console.log('Ques Answer: ' + questions[randIndex].answer);
   console.log('Button Selection Value: ' + buttonEl.value);
   running_total.push(1);
@@ -111,7 +110,6 @@ function selection(event){
 
     feedbackEl.textContent = 'Correct!';
   }
-
     // flash right/wrong feedback on page for half a second
     feedbackEl.setAttribute('class', 'feedback');
     setTimeout(function () {
@@ -123,9 +121,7 @@ function selection(event){
   } else {
     randIndex = 0
   }
-    
-
-      // check if we've run out of questions
+  // check if we've run out of questions
   if (time <= 0 || running_total.length + 1 > questions.length) {
     quizComplete();
     
@@ -150,5 +146,26 @@ function quizComplete() {
   questionsEl.setAttribute('class', 'hide');
 }
 
+function highScoreInput() {
+  
+  var initialsEl = document.querySelector("#initials");
+  var initials = initialsEl.value.trim();
+  var initials = initials.toUpperCase();
+
+  if (initials !== ''){
+    console.log(initials);  
+  } else {
+    alert("Please add initials, otherwise close the browser");
+  }
+
+  
+  
+}
+
+function submitInitials(){
+
+}
+
 startBtn.onclick = startTimer;
 choicesEl.onclick = selection;
+submitBtn.onclick = highScoreInput;
