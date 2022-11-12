@@ -3,6 +3,7 @@ var startScreenEl = document.querySelector("#start-screen");
 var time = document.querySelector("#time");
 var startBtn = document.querySelector("#start");
 var submitBtn = document.querySelector("#submit");
+var choicesEl = document.getElementById('choices');
 var feedbackEl = document.querySelector("#feedback");
 var endScreenEl = document.querySelector("#end-screen");
 var questionsEl = document.querySelector("#questions");
@@ -15,9 +16,11 @@ console.log(endScreenEl);
 console.log(questionsEl);
 
 var timeLeft;
-numbQuestions = Object.keys(questions).length;
+var numbQuestions = Object.keys(questions).length;
 var quizTime = numbQuestions * 10;
+var randIndex = randIndex();
 
+console.log(randIndex);
 console.log(numbQuestions);
 console.log(quizTime);
 
@@ -43,10 +46,16 @@ function countdown(){
   }
 }
 
+function randIndex(){
+  var randIndex = Math.floor(Math.random() * questions.length);
+  return randIndex;
+}
+
+
+
 function retrieveQuestion(){
   quesTitle = questionsEl.querySelector("question-title");
-
-  var randIndex = Math.floor(Math.random() * questions.length);
+  
   var question = questions[randIndex];
 
   console.log(question);
@@ -60,9 +69,46 @@ function retrieveQuestion(){
     choiceDecision.setAttribute('class', 'choice');
     choiceDecision.setAttribute('value', choice);
 
-    choiceDecision.textContent = choice
+    choiceDecision.textContent = i + 1 +  ') ' + choice;
     questionsEl.children[1].appendChild(choiceDecision);
   }
 }
 
+function selection(event){
+  var buttonEl = event.target;
+  
+  console.log(questions[randIndex].answer);
+  console.log(buttonEl.value);
+  
+  if (buttonEl.value !== questions[randIndex].answer) {
+    // penalize time
+    quizTime -= 5;
+
+    if (quizTime < 0) {
+      quizTime = 0;
+    }
+
+    // display new time on page
+    time.textContent = quizTime;
+
+    // play "wrong" sound effect
+    // sfxWrong.play();
+
+    feedbackEl.textContent = 'Wrong!';
+  } else {
+    // play "right" sound effect
+    // sfxRight.play();
+
+    feedbackEl.textContent = 'Correct!';
+  }
+
+    // flash right/wrong feedback on page for half a second
+    feedbackEl.setAttribute('class', 'feedback');
+    setTimeout(function () {
+      feedbackEl.setAttribute('class', 'feedback hide');
+    }, 1000);
+}
+
 startBtn.onclick = startTimer;
+
+choicesEl.onclick = selection;
