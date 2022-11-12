@@ -19,7 +19,9 @@ var timeLeft;
 var numbQuestions = Object.keys(questions).length;
 var quizTime = numbQuestions * 10;
 var randIndex = randIndex();
+var running_total = [];
 
+console.log('Running total length: ' + running_total.length);
 console.log(randIndex);
 console.log(numbQuestions);
 console.log(quizTime);
@@ -51,16 +53,20 @@ function randIndex(){
   return randIndex;
 }
 
-
-
 function retrieveQuestion(){
+  if (randIndex === questions.length) {
+    randIndex = 0
+  }
+
   quesTitle = questionsEl.querySelector("question-title");
-  
   var question = questions[randIndex];
 
   console.log(question);
+  console.log('Random Index Numb: ' + randIndex);
 
   questionsEl.children[0].textContent = question.title;
+  choicesEl.innerHTML = "";
+
 
   for(var i=0; i < question.choices.length; i++) {
     var choice = question.choices[i];
@@ -71,14 +77,16 @@ function retrieveQuestion(){
 
     choiceDecision.textContent = i + 1 +  ') ' + choice;
     questionsEl.children[1].appendChild(choiceDecision);
-  }
+  }     
 }
 
 function selection(event){
   var buttonEl = event.target;
   
-  console.log(questions[randIndex].answer);
-  console.log(buttonEl.value);
+  console.log('Ques Answer: ' + questions[randIndex].answer);
+  console.log('Button Selection Value: ' + buttonEl.value);
+  running_total.push(1);
+  console.log('Running total length: ' + running_total.length);
   
   if (buttonEl.value !== questions[randIndex].answer) {
     // penalize time
@@ -107,6 +115,22 @@ function selection(event){
     setTimeout(function () {
       feedbackEl.setAttribute('class', 'feedback hide');
     }, 1000);
+    
+  if (randIndex < questions.length) {
+    randIndex++;
+  } else {
+    randIndex = 0
+  }
+    
+
+      // check if we've run out of questions
+  if (time <= 0 || running_total.length + 1 > questions.length) {
+    window.location.reload();
+    
+  } else {
+    // randIndex = [];
+    retrieveQuestion();
+  }
 }
 
 startBtn.onclick = startTimer;
