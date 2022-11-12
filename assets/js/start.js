@@ -153,12 +153,25 @@ function highScoreInput() {
   var initials = initials.toUpperCase();
 
   if (initials !== ''){
-    console.log(initials);  
+    var highScores = JSON.parse(localStorage.getItem("highScores")) || [];
+     
+    var score = {
+      "initials": initials,
+      "score": quizTime
+    };
+
+    highScores.push(score);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+
+    console.log(score); 
+    console.log(highScores)
+  
   } else {
     alert("Please add initials, otherwise close the browser");
   }
 
-  
+  window.location.href = 'highscores.html';
   
 }
 
