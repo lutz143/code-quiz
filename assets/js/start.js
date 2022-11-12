@@ -35,7 +35,6 @@ function startTimer(){
 
   timeLeft = setInterval(countdown, 1000);
 
-    // show starting time
   time.textContent = quizTime;
 
   retrieveQuestion();
@@ -47,7 +46,7 @@ function countdown(){
 
   if (quizTime <= 0){
     // call the end of the quiz, displaying score and asking for user's initials to log score
-    window.location.reload();
+    quizComplete();
   }
 }
 
@@ -128,7 +127,7 @@ function selection(event){
 
       // check if we've run out of questions
   if (time <= 0 || running_total.length + 1 > questions.length) {
-    window.location.reload();
+    quizComplete();
     
   } else {
     // randIndex = [];
@@ -136,6 +135,20 @@ function selection(event){
   }
 }
 
-startBtn.onclick = startTimer;
+function quizComplete() {
+  // quiz has finished so stop the countdown
+  clearInterval(timeLeft);
 
+  // clear the style hiding the end screen (show end screen)
+  var endScreenEl = document.getElementById('end-screen');
+  endScreenEl.removeAttribute('class');
+
+  // 
+  var finalScoreEl = document.getElementById('final-score');
+  finalScoreEl.textContent = quizTime + ' seconds';
+
+  questionsEl.setAttribute('class', 'hide');
+}
+
+startBtn.onclick = startTimer;
 choicesEl.onclick = selection;
