@@ -35,6 +35,9 @@ function startTimer(){
 
   timeLeft = setInterval(countdown, 1000);
 
+    // show starting time
+  time.textContent = quizTime;
+
   retrieveQuestion();
 }
 
