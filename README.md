@@ -5,13 +5,13 @@
 ## Description
 
 ```
-PLACEHOLDER
+This project displays a number of API and DOM-targeting and manipulation techniques. For example, the timed quiz uses the setInterval method and renders a list of questions and answer choices that a user can select. Additionally, we use localStorage to store initials and highscores of previous players.
 ```
 
 ## User Story
 
 ```
-PLACEHOLDER
+AS A coding boot camp student I WANT to take a timed quiz on JavaScript fundamentals that stores high scores SO THAT I can gauge my progress compared to my peers
 ```
 
 
@@ -32,17 +32,11 @@ PLACEHOLDER
 
 ## Deployed Application
 
-```
-PLACEHOLDER
 ![image](./assets/images/lutz143_MockUp.JPG)
-```
 
 ## Link to Deployed Application
 
-```
-PLACEHOLDER
-https://lutz143.github.io/password-generator/
-```
+https://lutz143.github.io/code-quiz/
 
 ## Assets/License/Credits
 
